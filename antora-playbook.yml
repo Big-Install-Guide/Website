@@ -1,0 +1,29 @@
+site:
+  robots: allow
+  start_page: Gentoo::index.adoc
+  title: Big Install Guide
+  # The 404 page and sitemap files only generated if the url property is set
+  #url: https://antora.gitlab.io/demo/docs-site
+git:
+  # .git is already appended to 'url:'
+  ensure_git_suffix: false
+  credentials:
+  # Make sure the Token attached to this file is limited in permissions.
+  # Only 'repo' and 'workflow' should be checked for this GitHub token.
+  # https://github.com/settings/tokens
+    path: ./.git-credentials
+content:
+  sources:
+  - url: https://github.com/Big-Install-Guide/Gentoo.git 
+    branches: master
+    # setting edit_url to false disables the "Edit this Page" link for any page that originates from this repository
+    # the same thing can be achieved by adding empty credentials (i.e., @) in front of the domain in the URL
+    edit_url: true
+    start_path: docs
+ui:
+  bundle:
+    # TODO: Override this with local theming instead.
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+urls:
+  html_extension_style: drop

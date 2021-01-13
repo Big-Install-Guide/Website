@@ -1,0 +1,22 @@
+site:
+  title: Big Install Guide
+  # The 404 page and sitemap files only generated if the url property is set
+  #url: https://antora.gitlab.io/demo/docs-site
+git:
+  # .git is already appended to 'url:'
+  ensure_git_suffix: false
+content:
+  sources:
+  - url: ./
+    # There might be multiple distros supported; NixOS interests me.
+    branches: HEAD
+    # setting edit_url to false disables the "Edit this Page" link for any page that originates from this repository
+    # the same thing can be achieved by adding empty credentials (i.e., @) in front of the domain in the URL
+    edit_url: false
+    #start_path: docs
+ui:
+  bundle:
+    url: https://gitlab.com/antora/antora-ui-default/-/jobs/artifacts/master/raw/build/ui-bundle.zip?job=bundle-stable
+    snapshot: true
+urls:
+  html_extension_style: drop
