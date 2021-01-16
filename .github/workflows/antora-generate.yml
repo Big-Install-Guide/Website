@@ -1,9 +1,39 @@
-- name: Antora Site
-  # You may pin to the exact commit or the version.
-  # uses: kameshsampath/antora-site-action@00187261061958ec343ba2d888cb641d43a8c02c
-  uses: kameshsampath/antora-site-action@v0.2.4
-  with:
-    # The Antora playbook file
-    antora_playbook: github.yml # default is site.yaml
-    # The path relative to workspace root, where the asciidoc sources exits
-    site_sources_path: # optional
+name: Publish website
+
+on:
+  push:
+    branches:
+      - "master"
+  pull_request:
+    branches:
+      - "master"
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+
+      - name: Antora Site
+      # You may pin to the exact commit or the version.
+      # uses: kameshsampath/antora-site-action@00187261061958ec343ba2d888cb641d43a8c02c
+      uses: kameshsampath/antora-site-action@v0.2.4
+      with:
+        antora_playbook: github.yml # default is site.yaml
+      # The path relative to workspace root, where the asciidoc sources exits
+      # site_sources_path: # optional
+
+      - name: Publish to GitHub Pages
+        uses: crazy-max/ghaction-github-pages@v2.2.0
+        with:
+          # Build directory to deploy
+          build_dir: build/site
+          # Allow Jekyll to build your site
+          jekyll: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
