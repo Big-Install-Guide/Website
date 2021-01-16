@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: Big Install Guide</title>
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Big Install Guide</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="gentoo" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-explore is-active" data-panel="explore">
+  <div class="context">
+    <span class="title">Gentoo section</span>
+    <span class="version">current</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../index.html">Gentoo section</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../index.html">current</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+</nav>
+  <div class="edit-this-page"><a href="file:///E:/Unsynced/Git/BIG/Gentoo/docs/modules/install/pages/preparations.adoc">Edit this Page</a></div>
+</div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="paragraph">
+<p>&gt;*Before continuing, read "Guide to the guide" in [3.0 Explanations](3.0-Explanations). All instructions assume this has been read.*</p>
+</div>
+<div class="paragraph">
+<p><code>$ ping gentoo.org</code><br>
+Open a terminal, and ensure internet connection is established.</p>
+</div>
+<div class="sect2">
+<h3 id="_artix_usb_setup"><a class="anchor" href="#_artix_usb_setup"></a>Artix USB Setup</h3>
+<div class="paragraph">
+<p><strong>Enter superuser: <code>sudo -i</code></strong></p>
+</div>
+<div class="paragraph">
+<p><code># passwd artix</code><br>
+Change the default password.<br>
+<code># passwd -l root</code><br>
+Lock the root account.</p>
+</div>
+<div class="paragraph">
+<p><code># pacman -Sy git hdparm links</code><br>
+Required software for the Gentoo installation.</p>
+</div>
+<div class="paragraph">
+<p><code># /etc/init.d/lvm start</code><br>
+Fully initialize LVM2, gets rid of "WARNING: Failed to connect to lvmetad. Falling back to device scanning."</p>
+</div>
+<div class="paragraph">
+<p><strong>Exit superuser: <code>exit</code></strong>
+<em>_</em>
+=== Optional software.</p>
+</div>
+<div class="paragraph">
+<p>ALSA is not supported by Firefox since 52 (7th March 2017); this is if audio support for Tor Browser is desired.<br>
+<code># pacman -S pulseaudio pavucontrol</code><br>
+<code>$ pulseaudio -D</code><br>
+Run PulseAudio as an unprivileged daemon.</p>
+</div>
+<div class="paragraph">
+<p>Installing Yay binary (Arch User Repository helper).<br>
+<code># pacman -S binutils fakeroot</code><br>
+<code>$ git clone <a href="https://aur.archlinux.org/yay-bin.git" class="bare">https://aur.archlinux.org/yay-bin.git</a></code><br>
+<code>$ cd yay-bin</code><br>
+<code>$ makepkg -si</code></p>
+</div>
+<div class="paragraph">
+<p><code>$ gpg --auto-key-locate nodefault,wkd --locate-keys <a href="mailto:torbrowser@torproject.org">torbrowser@torproject.org</a></code><br>
+<code>$ yay -S tor-browser</code></p>
+</div>
+<hr>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;Yay</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>NEEDS MORE INFO</strong><br>
+<strong>An AUR helper, and a Pacman frontend.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Launch options:<br>
+<code>--devel</code> Update GIT packages based on commit history, instead of PKGBUILD date; most GIT PKGBUILDS don&#8217;t update for long periods of time.</p>
+</div>
+<div class="paragraph">
+<p><code>-c</code> Recursively removes all packages entirely dependent on the target packages, <strong>with</strong> force.<br>
+<code>-s</code> Recursively removes all packages entirely dependent on the target packages, <strong>without</strong> force.</p>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<hr>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

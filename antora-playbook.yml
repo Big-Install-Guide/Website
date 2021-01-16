@@ -1,8 +1,7 @@
 site:
-  robots: allow
-  start_page: Gentoo::index.adoc
+  robots: deny
   title: Big Install Guide
-  # The 404 page and sitemap files only generated if the url property is set
+  # The 404 page and sitemap files only generate if the url property is set
   #url: https://antora.gitlab.io/demo/docs-site
 git:
   # .git is already appended to 'url:'
@@ -11,7 +10,7 @@ git:
   # Make sure the Token attached to this file is limited in permissions.
   # Only 'repo' and 'workflow' should be checked for this GitHub token.
   # https://github.com/settings/tokens
-    path: ./.git-credentials
+    path: ../.git-credentials
 content:
   sources:
   - url: https://github.com/Big-Install-Guide/Gentoo.git 
