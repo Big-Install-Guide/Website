@@ -20,13 +20,13 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Antora Site
-      # You may pin to the exact commit or the version.
-      # uses: kameshsampath/antora-site-action@00187261061958ec343ba2d888cb641d43a8c02c
-      uses: kameshsampath/antora-site-action@v0.2.4
-      with:
-        antora_playbook: github.yml # default is site.yaml
-      # The path relative to workspace root, where the asciidoc sources exits
-      # site_sources_path: # optional
+        # You may pin to the exact commit or the version.
+        # uses: kameshsampath/antora-site-action@00187261061958ec343ba2d888cb641d43a8c02c
+        uses: kameshsampath/antora-site-action@v0.2.4
+        with:
+          antora_playbook: github.yml # default is site.yaml
+        # The path relative to workspace root, where the asciidoc sources exits
+        # site_sources_path: # optional
 
       - name: Publish to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v2.2.0
