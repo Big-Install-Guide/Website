@@ -1,0 +1,9 @@
+- name: Antora Site
+  # You may pin to the exact commit or the version.
+  # uses: kameshsampath/antora-site-action@00187261061958ec343ba2d888cb641d43a8c02c
+  uses: kameshsampath/antora-site-action@v0.2.4
+  with:
+    # The Antora playbook file
+    antora_playbook: github.yml # default is site.yaml
+    # The path relative to workspace root, where the asciidoc sources exits
+    site_sources_path: # optional
