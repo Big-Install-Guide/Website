@@ -41,6 +41,7 @@ jobs:
           # https://github.com/organizations/Big-Install-Guide/settings/secrets/actions
           GITHUB_TOKEN: ${{ secrets.LIMITED_PAT }}
   PONG:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
