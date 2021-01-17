@@ -6,9 +6,13 @@ on:
   pull_request:
     branches:
       - "master"
+  repository_dispatch:
+    types:
+      - "ack"
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
+  # This workflow contains a single job called "build".
+  # 'build' is not a separate function; can be named 'example' to do the same task.
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
@@ -34,4 +38,13 @@ jobs:
           # Allow Jekyll to build your site
           jekyll: false
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # https://docs.github.com/en/github/authenticating-to-github/creating-a-personal-access-token
+          # https://github.com/organizations/Big-Install-Guide/settings/secrets/actions
+          GITHUB_TOKEN: ${{ secrets.LIMITED_PAT }}
+  PONG:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: echo ${{ github.event.client_payload.sha }}
