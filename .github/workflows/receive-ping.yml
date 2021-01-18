@@ -12,4 +12,4 @@ jobs:
          -H "Accept: application/vnd.github.v3+json" \
          https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches \
          --user ${{ secrets.LIMITED_PAT }} \
-         -d '{"ref":"ref"}' 
+         -d '{"ref":"refs/heads/master"}' 
