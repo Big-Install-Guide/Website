@@ -8,8 +8,8 @@ jobs:
       - name: '"Manually" update website'
         run: |
           curl \
+          --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --user ${{ secrets.LIMITED_PAT }} \
           --data '{"ref":"refs/heads/master"}' \
-          --request POST \
           https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches
