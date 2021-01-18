@@ -10,6 +10,6 @@ jobs:
           curl \
           --request POST \
           --header "Accept: application/vnd.github.v3+json" \
-          --user ${{ secrets.LIMITED_PAT }} \
+          --user '${{ secrets.LIMITED_PAT }}' \
           --data '{"ref":"refs/heads/master"}' \
-          https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches
+          --url "https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches"
