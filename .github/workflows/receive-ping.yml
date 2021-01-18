@@ -7,8 +7,7 @@ jobs:
     steps:
       - name: '"Manually" update website'
         run: |
-          curl \
-          --request POST \
+          curl --request POST \
           --header "Accept: application/vnd.github.v3+json" \
           --user '${{ secrets.LIMITED_PAT }}' \
           --data '{"ref":"refs/heads/master"}' \
