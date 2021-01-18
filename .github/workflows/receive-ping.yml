@@ -10,5 +10,5 @@ jobs:
          curl \
          -X POST \
          -H "Accept: application/vnd.github.v3+json" \
-         https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml \
+         https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches \
          -d '{"ref":"ref"}' 
