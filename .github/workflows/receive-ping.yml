@@ -1,11 +1,11 @@
-name: Recieve ping to update 'Website'
+name: Ping receieved to update website
 on:
   [repository_dispatch]
 jobs:
   PONG:
     runs-on: ubuntu-latest
     steps:
-      - name: Event Information
+      - name: "Manually" update website 
         run: |
          curl \
          -X POST \
