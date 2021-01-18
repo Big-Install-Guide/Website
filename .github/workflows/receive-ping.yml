@@ -5,7 +5,7 @@ jobs:
   PONG:
     runs-on: ubuntu-latest
     steps:
-      - name: "Manually" update website 
+      - name: '"Manually" update website'
         run: |
           curl \
           --header "Accept: application/vnd.github.v3+json" \
