@@ -1,7 +1,6 @@
 name: Recieve ping to update 'Website'
 on:
-  repository_dispatch:
-    types: [ack, PONG]
+  [repository_dispatch]
 jobs:
   PONG:
     runs-on: ubuntu-latest
