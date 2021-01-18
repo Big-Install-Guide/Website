@@ -1,4 +1,4 @@
-name: Ping receieved to update website
+name: Receive ping to update website
 on:
   [repository_dispatch]
 jobs:
@@ -7,9 +7,9 @@ jobs:
     steps:
       - name: "Manually" update website 
         run: |
-         curl \
-         -X POST \
-         -H "Accept: application/vnd.github.v3+json" \
-         https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches \
-         --user ${{ secrets.LIMITED_PAT }} \
-         -d '{"ref":"refs/heads/master"}' 
+          curl \
+          --header "Accept: application/vnd.github.v3+json" \
+          --user ${{ secrets.LIMITED_PAT }} \
+          --data '{"ref":"refs/heads/master"}' \
+          --request POST \
+          https://api.github.com/repos/Big-Install-Guide/Website/actions/workflows/generate-and-publish-website.yml/dispatches
