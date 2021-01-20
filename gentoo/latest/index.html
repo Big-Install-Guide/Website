@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gentoo section :: Big Install Guide</title>
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script>var uiRootPath = '../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../..">Big Install Guide</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="gentoo" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="./">Gentoo section</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="install/preparations">Preparing installation environment</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="install/base-setup">Gentoo base setup</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Gentoo section</span>
+    <span class="version">rolling</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="./">Gentoo section</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="./">rolling</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="./">Gentoo section</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/Big-Install-Guide/Gentoo/edit/master/docs/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<h1 class="page">Gentoo section</h1>
+<div id="preamble">
+<div class="sectionbody">
+<h3 id="_follow_gentoo_linux_installation_guide_in_order_recommended" class="discrete">Follow Gentoo Linux installation guide in order (recommended)</h3>
+<div class="paragraph">
+<p><a href="install/preparations" class="page">From start to finish; single-page view.</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_guide_lingo"><a class="anchor" href="#_guide_lingo"></a>Guide lingo</h2>
+<div class="sectionbody">
+<details><summary>Details</summary>
+<h4 id="_unicode_symbols" class="discrete">Unicode symbols</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>⥣ <kbd>Up Arrow</kbd><br>
+⥥ <kbd>Down Arrow</kbd></p>
+</li>
+<li>
+<p>⥢ <kbd>Left Arrow</kbd><br>
+⥤ <kbd>Right Arrow</kbd></p>
+</li>
+<li>
+<p>↵ <kbd>Enter</kbd><br>
+↹ <kbd>TAB</kbd></p>
+</li>
+</ul>
+</div>
+<h4 id="_non_unicode_symbols" class="discrete">Non-unicode symbols</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code><strong>*</strong></code><br>
+Matches any zero or more characters after the wildcard.<br></p>
+</li>
+<li>
+<p><code><strong>?</strong></code><br>
+Matches any one character it&#8217;s in place of, or is used to select in a list of desired characters if one in the list occurs: ?(neg|pos).<br></p>
+</li>
+<li>
+<p><code><strong>\</strong></code><br>
+Used as a delimiter. Try <code>echo "test" &gt; testfile01</code>, the " symbols are removed; <code>echo \"\test\"\ &gt; testfile01</code> maintains the " symbols.</p>
+</li>
+</ul>
+</div>
+<h4 id="_running_commands" class="discrete">Running commands</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><code># command</code><br>
+Command requires superuser to work as intended, or at all.</p>
+</li>
+<li>
+<p><code>$ command</code><br>
+Can only be ran non-privileged.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>$# command</code><br>
+Can be ran privileged or non-privileged; same result.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>$/# command</code><br>
+Different use cases for running privileged, or non-privileged.</p>
+</li>
+<li>
+<p><code># $(example)</code><br>
+Still ran privileged.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>$ $(example)</code><br>
+Still ran non-privileged.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">TTY navigation</div>
+<ul>
+<li>
+<p>Alt Left/Right arrow keys<br>
+Switch to TTY in a given arrow key direction.</p>
+</li>
+<li>
+<p><span class="keyseq"><kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>F1</kbd></span><br>
+Switch to TTY 1, goes up to 6 (F6) by default; typically used to terminate the Window Manager if it&#8217;s unresponsive.</p>
+</li>
+<li>
+<p><kbd>Home</kbd><br>
+Jump to start of line.</p>
+</li>
+<li>
+<p><kbd>End</kbd><br>
+Jump to end of line.</p>
+</li>
+</ul>
+</div>
+<h4 id="_neovim_keybindings" class="discrete">Neovim keybindings</h4>
+<div class="ulist">
+<ul>
+<li>
+<p>ESC<br>
+Exit current mode.</p>
+</li>
+<li>
+<p>LSHIFT + d<br>
+Delete text after cursor on current line.</p>
+</li>
+<li>
+<p>i<br>
+Enter insert mode (must be no in mode/exit all other modes).</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+If a letter is capitalized, it requires holding down the Shift key.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Insert mode:
+v
+- Visual (select) mode
+h
+- Move cursor left
+j
+- Move cursor down
+k
+- Move cursor up
+l
+- Move cursor right
+y$
+- Copy from cursor, to end of line
+$p
+- Paste at end of line
+dd
+- Delete current line
+dw
+- Delete word
+cw
+- Delete word, then go into Insert Mode
+:w
+- Write (save) file
+:wq
+- Write then quit
+G
+- Jump to bottom of file
+gg
+- Jump to top of file</p>
+</div>
+</details>
+<hr>
+</div>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

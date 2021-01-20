@@ -1,0 +1,1655 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Untitled :: Big Install Guide</title>
+    <meta name="generator" content="Antora 2.3.4">
+    <link rel="stylesheet" href="../../../_/css/site.css">
+    <script>var uiRootPath = '../../../_'</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="../../..">Big Install Guide</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="#">Home</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Products</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Product A</a>
+            <a class="navbar-item" href="#">Product B</a>
+            <a class="navbar-item" href="#">Product C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Services</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Service A</a>
+            <a class="navbar-item" href="#">Service B</a>
+            <a class="navbar-item" href="#">Service C</a>
+          </div>
+        </div>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">Resources</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="#">Resource A</a>
+            <a class="navbar-item" href="#">Resource B</a>
+            <a class="navbar-item" href="#">Resource C</a>
+          </div>
+        </div>
+        <div class="navbar-item">
+          <span class="control">
+            <a class="button is-primary" href="#">Download</a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="gentoo" data-version="latest">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../">Gentoo section</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="preparations">Preparing installation environment</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <a class="nav-link" href="base-setup">Gentoo base setup</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Gentoo section</span>
+    <span class="version">rolling</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <a class="title" href="../">Gentoo section</a>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../">rolling</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../">Gentoo section</a></li>
+    <li><a href="base-setup">Gentoo base setup</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/Big-Install-Guide/Gentoo/edit/master/docs/modules/install/pages/base-setup.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+<article class="doc">
+<div class="paragraph">
+<p><a href="#partial$guide-lingo.adoc" class="page unresolved">partial$guide-lingo.adoc</a></p>
+</div>
+<div class="sect2">
+<h3 id="_gentoo_disk_setup"><a class="anchor" href="#_gentoo_disk_setup"></a>Gentoo Disk Setup</h3>
+<div class="paragraph">
+<p><code># zsh -c <span class="menuseq"><b class="menu">echo performance</b>&#160;<i class="fa fa-angle-right caret"></i> <b class="menuitem">/sys/devices/system/cpu/cpu*/cpufreq/scaling_governor</b></span></code><br>
+Force CPU frequency to the maximum at all times to lower compilation time.</p>
+</div>
+<div class="paragraph">
+<p><code>$ lsblk -f</code><br>
+List partitions and their assigned [filesystem &amp; label](from the -f parameter).<br>
+<code>$ lsblk</code><br>
+Even if unmounted, show the max partition sizes; for additional perspective.</p>
+</div>
+<div class="paragraph">
+<p>Issues the "SECURITY_ERASE" or "SECURITY_ERASE_ENHANCED" instruction to the targeted SSD&#8217;s firmware, marking all the SSD&#8217;s cells as empty, removing all data and potentially restoring the SSD to factory default write performance.</p>
+</div>
+<details><summary>ATA Secure Erase</summary>
+<div class="admonitionblock warning">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-warning" title="Warning"></i>
+</td>
+<td class="content">
+Do not attempt a Secure Erase for SSDs connected through any USB adapter or SAS/RAID card!
+* After a successful Secure Erase, <code>lsblk</code> will still show the same partition tables. Secure Erase does not tell <code>lsblk</code> that a disk has been wiped, and is using old information; the <code>gdisk</code> or <code>fdisk</code> tool will correctly show that the disk is empty.
+* -I is a capital i; some fonts don&#8217;t display this correctly.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><code># hdparm -I /dev/EXAMPLE | grep -Ei "model|enabled|master|not|locked|frozen|erase"</code><br>
+Check if the SSD is frozen, has a password, and if Secure Erase can be ran on it.</p>
+</div>
+<div class="paragraph">
+<p><code># echo -n mem &gt; /sys/power/state</code><br>
+The SSD cannot be erased while frozen, unfreeze it and wait 20 seconds; if the screen doesn&#8217;t go back on, press the power button.</p>
+</div>
+<div class="paragraph">
+<p><code># hdparm --user-master u --security-set-pass Kero /dev/EXAMPLE</code><br>
+There is no need to change "Kero", this password will be discarded after a successful Secure Erase.</p>
+</div>
+<div class="paragraph">
+<p><code># hdparm --user-master u --security-erase-enhanced Kero /dev/EXAMPLE</code><br>
+If the enhanced mode is not supported, use '--security-erase' instead.</p>
+</div>
+<div class="paragraph">
+<p><code># hdparm -I /dev/EXAMPLE | grep -Ei "model|enabled|master|not"</code><br>
+Check if there is still a master password assigned.</p>
+</div>
+<div class="paragraph">
+<p><code># hdparm --security-disable Kero /dev/EXAMPLE</code><br>
+If Secure Erase succeeded, the master password is removed; if not (or Secure Erase failed), remove the password manually.</p>
+</div>
+</details>
+<hr>
+<div class="paragraph">
+<div class="title">Must be done if ATA Secure Erase wasn&#8217;t used.<br></div>
+<p><code># wipefs -a /dev/EXAMPLE</code></p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Removes all partition tables for a specified disk.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The fastest method for erasing files (for non-SSDs), while providing protection against disk forensics; running on an SSD will shorten its lifespan slightly.<br>
+<code># cryptsetup open --type plain -d /dev/urandom /dev/EXAMPLE cleanit</code><br>
+<code># cat /dev/zero &gt; /dev/mapper/cleanit</code><br>
+<code># cryptsetup close cleanit</code>
+<em>_</em></p>
+</div>
+<div class="paragraph">
+<p><code>$# df -ha | grep efi</code><br>
+If efivarsfs is not present, support for UEFI is missing; refer to your motherboard&#8217;s manual if this is the case.</p>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+If you fuck up, <kbd>q</kbd> <kbd>↵</kbd> to exit; partition tables are not written to disk before confirmation from <kbd>w</kbd> <kbd>↵</kbd>.
+</td>
+</tr>
+</table>
+</div>
+<details><summary>UEFI
+</summary>
+<div class="paragraph">
+<p><code># gdisk /dev/EXAMPLE</code><br>
+Specify the disk to create partition tables on.</p>
+</div>
+<div class="paragraph">
+<p>Ensure the selected disk is empty.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Partition table scan:
+  MBR: not present
+  BSD: not present
+  APM: not present
+  GPT: not present
+
+Command: p ↵
+
+&lt;REDACTED&gt;
+
+Number  Start (sector)    End (sector)  Size       Code  Name</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create the initial partition table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: o ↵
+This option deletes all partitions and creates a new protective MBR.
+Proceed? (Y/N): y ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 1 - Allocate 60 mebibytes for the /efi directory (unencrypted).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Partition number: ↵
+First sector: ↵
+Last sector: +60M ↵
+Hex code or GUID: ef00 ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 2 - Allocate rest of the disk for the LUKS partition, which will later contain LVM2-based (virtual) partitions.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+The LUKS (8309) Hex code isn&#8217;t used as it&#8217;s too specific for a partition that contains no filesystem (on the outside); da00 (Non-FS Type) currently does not exist in gptfdisk (gdisk).
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Partition number: ↵
+First sector: ↵
+Last sector: ↵
+Hex code or GUID: ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>[!] Write the new partition tables scheme to disk.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: w ↵
+Do you want to proceed? (Y/N): y ↵</code></pre>
+</div>
+</div>
+</details>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+MBR instructions are unverified, and don&#8217;t use full disk encryption (only UEFI does).
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;MBR with GPT partitions</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>GPT supports disks above 2TB capacity, 128 primary partitions instead of 4, and protects against boot record corruption.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># gdisk /dev/EXAMPLE</code><br>
+Specify the disk to create partition tables on.</p>
+</div>
+<div class="paragraph">
+<p>Ensure the selected disk is empty.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Partition table scan:
+  MBR: not present
+  BSD: not present
+  APM: not present
+  GPT: not present
+
+Command: p ↵
+
+&lt;REDACTED&gt;
+
+Number  Start (sector)    End (sector)  Size       Code  Name</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create the initial partition table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: o ↵
+This option deletes all partitions and creates a new protective MBR.
+Proceed? (Y/N): y ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 1 - Reserve 1 mebibyte for GRUB&#8217;s core.img at 1 mebibyte after the start of disk sectors.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Partition number: ↵
+First sector: +1M ↵
+Last sector: +1M ↵
+Hex code or GUID: ef02 ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 2 - Allocate rest of the disk for the LUKS partition, which will later contain LVM2-based (virtual) partitions.
+&gt; <strong>The LUKS (8309) Hex code isn&#8217;t used as it&#8217;s too specific for a partition that contains no filesystem (on the outside); da00 (Non-FS Type) currently does not exist in gptfdisk (gdisk).</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Partition number: ↵
+First sector: ↵
+Last sector: ↵
+Hex code or GUID: ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>[!] Write the new partition tables scheme to disk.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: w ↵
+Do you want to proceed? (Y/N): y ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;MBR&lt;/summary&gt;</p>
+</div>
+<div class="paragraph">
+<p><code># fdisk /dev/EXAMPLE</code><br>
+Specify the disk to create partition tables on.</p>
+</div>
+<div class="paragraph">
+<p>Ensure the selected disk is empty.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Device does not contain a recognized partition table.
+Created a new DOS disklabel with disk identifier 0x85db1a7b.
+
+Command: p ↵
+&lt;REDACTED&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create the initial partition table.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command (m for help): o ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 1 - Allocate 200 (+1 for GRUB&#8217;s core.img) mebibytes for the /boot directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Select: ↵
+Partition number: ↵
+First sector: ↵
+Last sector: +201M ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Partition 2 - Allocate rest of the disk for the LUKS partition, which will later contain LVM2-based (virtual) partitions.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command: n ↵
+Select: ↵
+Partition number: ↵
+First sector: ↵
+Last sector: ↵
+
+Command: t ↵
+Partition number (1,2, default 2): ↵
+Hex code: da ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>[!] Write the new partition tables scheme to disk.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">Command (m for help): w ↵</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p><strong>Disk encryption</strong><br>
+Protects against data extraction from thieves, adversaries, and so on.<br>
+Using this is intended, and all further instructions will assume its usage.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>12 characters minimum for the LUKS1 password, with lowercase and uppercase letters, numbers, and symbols; try to use all of them, and in a randomized fashion.<br>
+[!] Do not store the password on any electronic device; if you must store the password, write it down and have more than one copy in a secure place (or somewhere in your house, determine the threat model for yourself to see if that&#8217;s acceptable).<br>
+Example: p8^kB2wX%GjC (12 character length, 78.84 entropy)</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># cryptsetup -M luks1 -h whirlpool -s 512 -i 3000 -v luksFormat /dev/EXAMPLE2</code><br>
+GRUB2 supports LUKS2 partially, but I couldn&#8217;t get it working; -h -s -i are set to trade some speed for security to make up for using LUKS1.</p>
+</div>
+<div class="paragraph">
+<p><code># cryptsetup open /dev/EXAMPLE2 luksdisk</code><br>
+Encrypted blocks don&#8217;t mount automatically after creation.</p>
+</div>
+<div class="paragraph">
+<p>Creating the LVM2 snapshot (virtual partition) layout.<br>
+<code># pvcreate /dev/mapper/luksdisk</code><br>
+<code># vgcreate Gentoo /dev/mapper/luksdisk</code><br>
+<code># lvcreate -l 100%FREE Gentoo -n root</code></p>
+</div>
+<hr>
+<div class="paragraph">
+<p>[UEFI] Make VFAT filesystem for the EFI System partition.<br>
+<code># mkfs.fat -F 32 /dev/EXAMPLE1</code></p>
+</div>
+<div class="paragraph">
+<p><strong>Choose the root filesystem with care.</strong></p>
+</div>
+<div class="paragraph">
+<p>XFS' performance is best when handling large files, and has higher average performance compared to ext4; XFS works well and is made for any type of hard disk (SSD or not).</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Downsides:<br>
+Inability to resize partitions (not the case for systemd distros).<br>
+inode64 usage for &gt;1TB partitions. inode64 leads to the malfunctioning of some 32-bit software (though few), Steam is a notable example: <a href="https://github.com/ValveSoftware/Source-1-Games/issues/1685" class="bare">https://github.com/ValveSoftware/Source-1-Games/issues/1685</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code># mkfs.xfs /dev/Gentoo/root</code></p>
+</div>
+<div class="paragraph">
+<p>ext4 is the most popular journaling filesystem on Linux. A jack of all trades, with no major downsides. It also has the best recovery tools, so data loss from software (not hardware failure) is easy to recover.<br>
+<code># mkfs.ext4 /dev/Gentoo/root</code></p>
+</div>
+<div class="paragraph">
+<p>F2FS is made for maximizing the capabilities of flash-based storage, such as SSDs, USBs, and microSD cards; flash storage with bad controllers will perform much quicker with F2FS than other filesystems, so use it for USBs and microSD cards.
+* Downsides:<br>
+fsck being insistent on scanning for file consistency; expect longer boot times: <a href="https://wiki.archlinux.org/index.php/F2FS#Long_running_fsck_delays_boot" class="bare">https://wiki.archlinux.org/index.php/F2FS#Long_running_fsck_delays_boot</a> <br>
+Not as mature as XFS and ext4 are.</p>
+</div>
+<div class="paragraph">
+<p><code># mkfs.f2fs /dev/Gentoo/root</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pre_chroot"><a class="anchor" href="#_pre_chroot"></a>Pre-chroot</h3>
+<div class="paragraph">
+<p><code># mkdir /mnt/gentoo</code><br>
+<code># mount /dev/Gentoo/root /mnt/gentoo</code><br>
+<code>$# cd /mnt/gentoo</code></p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># links <a href="https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/current-stage3-amd64-systemd/" class="bare">https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/current-stage3-amd64-systemd/</a></code><br>
+[OpenRC]<br>
+<code># links <a href="https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/current-stage3-amd64/" class="bare">https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/current-stage3-amd64/</a></code>
+&gt; <strong>[systemd &amp; OpenRC]<br>
+Download</strong> <code>stage3-amd64-<strong>.tar.</strong>.DIGESTS.asc</code> <strong>and</strong> <code>stage3-amd64-<strong>.tar.</strong></code><br>
+<strong>[OpenRC]<br>
+Do not use nomultilib.<br>
+Nomultilib&#8217;s minuscule memory and disk usage reduction does not outweigh the consequences of needing a single 32-bit package or more, and will quickly turn the installation into a nightmare.</strong></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>If DIGESTS.asc is shown as its text, press (in sequence): Esc f v ↵, then press Backspace to go back to the previous page.<br>
+If the file extensions cannot be seen, or the download is slow, exit Links and use a different random mirror.<br>
+↹ = Tab key; utilize auto-completion.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code>$# gpg --keyserver hkps://keys.gentoo.org --recv-keys 13EBBDBEDE7A12775DFDB1BABB572E0E2D182910</code> <br>
+<code>$# gpg --fingerprint 13EBBDBEDE7A12775DFDB1BABB572E0E2D182910</code><br>
+Should output..</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">pub   rsa4096 2009-08-25 [SC] [expires: 2021-01-01]
+      13EB BDBE DE7A 1277 5DFD  B1BA BB57 2E0E 2D18 2910
+uid           [ unknown] Gentoo Linux Release Engineering (Automated Weekly Release Key) &lt;releng@gentoo.org&gt;
+sub   rsa2048 2019-02-23 [S] [expires: 2021-01-01]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>$# gpg --verify ↹.↹</code>
+&gt; <strong>Ignore the warning, since signing this Gentoo GPG key with your own is unnecessary for checking authenticity.</strong></p>
+</div>
+<div class="paragraph">
+<p><code>$# cat ↹.↹</code> <br>
+<code>$# openssl dgst -r -whirlpool ↹</code></p>
+</div>
+<div class="paragraph">
+<p><code># tar xpf ↹ --xattrs-include='<strong>.</strong>' --numeric-owner</code><br>
+Extract a Gentoo stage3 archive with its correct permissions intact.</p>
+</div>
+<div class="paragraph">
+<p><code># cp -L /etc/resolv.conf etc/</code><br>
+Re-use the retrieved network DNS information for Gentoo as well.</p>
+</div>
+<div class="paragraph">
+<p>Enter the newly bootstrapped Gentoo Linux.<br>
+<code># curl <a href="https://framagit.org/3/BIG/-/raw/master/scripts/chroot.sh" class="bare">https://framagit.org/3/BIG/-/raw/master/scripts/chroot.sh</a> -O</code><br>
+<code># sh chroot.sh</code><br>
+<code># source /etc/profile</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_chroot_change_root"><a class="anchor" href="#_chroot_change_root"></a>Chroot (change root)</h3>
+<div class="paragraph">
+<p>[UEFI] Make directory for the unencrypted /efi, then mount it.<br>
+<code># mkdir /efi</code><br>
+<code># mount /dev/EXAMPLE1 /efi</code></p>
+</div>
+<div class="paragraph">
+<p><code># ln -sf /proc/self/mounts /etc/mtab</code><br>
+"Upstream only supports the /etc/mtab file being a symlink to /proc/self/mounts. Not creating this symlink will also cause problems with mount ([bug #434090](<a href="https://bugs.gentoo.org/show_bug.cgi?id=434090)" class="bare">https://bugs.gentoo.org/show_bug.cgi?id=434090)</a>) and df ([bug #477240](<a href="https://bugs.gentoo.org/show_bug.cgi?id=477240)" class="bare">https://bugs.gentoo.org/show_bug.cgi?id=477240)</a>). In the past, some utilities wrote information (like mount options) into /etc/mtab and thus it was supposed to be a regular file. Nowadays all software is supposed to avoid this problem."</p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># systemd-machine-id-setup</code><br>
+Allows journald (systemd&#8217;s journaling/logging) to work, and prevents strange behavior with networkd. Examples: Interfaces not coming UP (active), or local IP addresses not being assigned while UP.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge-webrsync</code><br>
+Ignore the missing /var/db/repos/gentoo/ location warning, the required location will automatically be created.</p>
+</div>
+<div class="paragraph">
+<p><code># eselect news read</code><br>
+Since this is a new install, information here likely doesn&#8217;t matter.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge dev-vcs/git</code><br>
+Git is the version control system used to update Gentoo ebuilds (packages), and is also used to pull (download) this repository&#8217;s files.</p>
+</div>
+<div class="paragraph">
+<p><code># git clone <a href="https://framagit.org/3/BIG" class="bare">https://framagit.org/3/BIG</a></code><br>
+<code># cp /BIG/make.conf /etc/portage</code></p>
+</div>
+<div class="paragraph">
+<p><code># emerge -a neovim</code><br>
+By default, '-a' (ask) has to be used to allow dispatch-conf to be notified that there is desired changes.<br>
+Neovim is a modal text editor that allows much easier modification of files, and is used in this guide for modifying files that require superuser access (Spacemacs for unprivileged access later on).</p>
+</div>
+<div class="paragraph">
+<p><code># dispatch-conf</code><br>
+Check the changes for anything out of place (skip, edit, or zap if needed), then accept Portage&#8217;s desired changes; press ⥣ twice then ↵ to run the previous command again.</p>
+</div>
+<div class="paragraph">
+<p><code>$# gcc -'<mark>#</mark>' -march=native /usr/include/stdlib.h</code><br>
+Retrieving the optimal -march, and -mtune strings for the current CPU.<br>
+<code>$# nproc</code><br>
+Output the total number of CPU logical cores.</p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/portage/make.conf</code><br>
+Configuring Portage (package manager) make settings.</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;LC_TIME list</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Every English locale with a different time and/or date formatting.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Locale</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Short Date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Long Date</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_AU</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d/m/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_BW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 01 May 2020 23:59</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_CA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yyyy-mm-dd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, May 1, 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_DK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 23.59</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_GB</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 23:59</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_HK</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d/m/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_IE</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday 1 May 2020 23:59</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_IN</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May, 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_NZ</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d/mm/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_PH</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">dd/mm/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_US</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">m/d/yy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, May 1, 2020 11:59 PM</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_ZA</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yyyy/mm/dd</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 1 May 2020 23:59</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">en_ZW</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">d/m/yyyy</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Friday, 01 May 2020 23:59</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>Setting locale and character sets.<br>
+<code># nvim /etc/locale.gen</code><br>
+Example: 'en_US.UTF-8' for language, 'en_GB.UTF-8' for date &amp; time formatting.</p>
+</div>
+<div class="paragraph">
+<p><code># locale-gen</code><br>
+Locale and character set generation.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><code>LC_COLLATE=C</code> <strong>keeps the default way of sorting regular expressions; dotfiles (.example_file) first, followed by uppercase, then lowercase filenames.</strong><br>
+<code>LC_TIME</code> <strong>controls the date formatting, and determines if 12-hour or 24-hour time is used.</strong><br>
+<code>LC_MEASUREMENT</code> <strong>controls whether Imperial or Metric, <code>C</code> is Metric.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># nvim /etc/locale.conf</code><br>
+[OpenRC]<br>
+<code># nvim /etc/env.d/02locale</code><br>
+Enforce the new locale and character sets.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">LANG=en_US.UTF-8
+LC_COLLATE=C
+LC_TIME=en_GB.UTF-8
+LC_MEASUREMENT=C</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># echo tux &gt; /etc/hostname</code><br>
+[OpenRC]<br>
+<code># echo hostname= \"\tux\"\ &gt; /etc/conf.d/hostname</code><br>
+Don&#8217;t use your real name, or any [hacker related names](<a href="https://web.archive.org/web/20180101131849/https://github.com/ValveSoftware/Source-1-Games/issues/2475" class="bare">https://web.archive.org/web/20180101131849/https://github.com/ValveSoftware/Source-1-Games/issues/2475</a>), prefer to keep it short and commonly used.</p>
+</div>
+<div class="paragraph">
+<p><code># env-update &amp;&amp; source /etc/profile</code><br>
+Reload the environment to apply new locale settings; stops specific warnings and/or errors during kernel builds (and some software) caused by the previous locale settings.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge ccache eix</code><br>
+Compiler Cache saves time if an ebuild fails to compile, as the problem(s) can be addressed quicker.<br>
+Eix is used as a search/index/sorting tool for ebuilds, and is far more efficient at it than Portage.</p>
+</div>
+<div class="paragraph">
+<p>Optionally, /var/cache/ccache can be replaced later with different directory such as /mnt/hdd/.ccache to leverage a disk mounted on /mnt/hdd.<br>
+<code># mkdir -p /var/cache/ccache</code><br>
+<code># chown root:portage /var/cache/ccache</code><br>
+<code># chmod 2775 /var/cache/ccache</code><br>
+<code># cp /BIG/ccache.conf /var/cache/ccache</code></p>
+</div>
+<div class="paragraph">
+<p><code># nvim /var/cache/ccache/ccache.conf</code><br>
+Change the 'max_size' (10 GiB by default) if desired.</p>
+</div>
+<div class="paragraph">
+<p><code># mkdir -p /etc/portage/repos.conf</code><br>
+<code># cp /BIG/gentoo.conf /etc/portage/repos.conf</code></p>
+</div>
+<div class="paragraph">
+<p><code># rm -r /var/db/repos/gentoo</code><br>
+Eix&#8217;s sync will fail if the contents of this directory used rsync instead of Git.</p>
+</div>
+<div class="paragraph">
+<p><code># eix-sync</code><br>
+Fetch the latest versions of ebuilds from only Gentoo&#8217;s official overlay (for now); eix is immediately informed of the changes, which will be used as the package (ebuild) search tool.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge cpuid2cpuflags eselect-repository gentoolkit</code></p>
+</div>
+<div class="paragraph">
+<p><code># eselect repository enable libressl</code><br>
+Fixes a total of 26 packages currently; used to be significantly more, but have been merged into mainline Gentoo over the years.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge --sync libressl</code><br>
+Fetch the latest versions of ebuilds from only the LibreSSL overlay.
+&gt; <strong>If you are asked to update Portage, do so with the command Portage told you to run.</strong></p>
+</div>
+<div class="paragraph">
+<p><code># eix-update</code><br>
+Inform Eix of the changes as <code>eix-sync</code> was not used, since <code>eix-sync</code> can only update all overlays at once.</p>
+</div>
+<div class="paragraph">
+<p><code># echo "<strong>/</strong> $(cpuid2cpuflags)" &gt; /etc/portage/package.use/00cpuflags</code><br>
+Ensure all compatible CPU_FLAGS are enabled for compilations executed by Portage.</p>
+</div>
+<div class="paragraph">
+<p><code># cp /BIG/package.mask /etc/portage</code><br>
+<code># cp /BIG/package.license /etc/portage</code><br>
+<code># cp -R /BIG/package.use /etc/portage</code><br>
+<code># cp /BIG/package.accept_keywords /etc/portage</code></p>
+</div>
+<div class="paragraph">
+<p><code># emerge -C openssl</code><br>
+Remove OpenSSL to replace with LibreSSL.<br>
+<code># emerge -av @preserved-rebuild</code><br>
+Rebuild packages previously using OpenSSL, as per Portage&#8217;s demands; this is not handled by -avuDN @world.</p>
+</div>
+<div class="paragraph">
+<p>Utilize the package.use and package.accept_keywords changes for the two primary compilation tools now.<br>
+<code># emerge -a1 binutils-libs binutils gcc</code></p>
+</div>
+<div class="paragraph">
+<p><code>$# eselect binutils list</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"> [1] x86_64-pc-linux-gnu-2.33.1 *
+ [2] x86_64-pc-linux-gnu-2.34</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># eselect binutils set 2</code><br>
+<code># . /etc/profile</code><br>
+<code>$# eselect gcc list</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"> [1] x86_64-pc-linux-gnu-9.2.0 *
+ [2] x86_64-pc-linux-gnu-9.3.0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># eselect gcc set 2</code><br>
+<code># emerge -1 libtool</code></p>
+</div>
+<div class="paragraph">
+<p>Include as needed.<br>
+Filesystems: <code>xfsprogs</code>, <code>f2fs-tools</code>, <code>ntfs3g</code>, <code>dosfstools</code> (FAT/VFAT/FAT32).<br>
+[PC Card (PCMICA)](<a href="https://en.wikipedia.org/wiki/PC_card" class="bare">https://en.wikipedia.org/wiki/PC_card</a>) support: <code>pcmciautils</code><br>
+<code>iwd</code> and <code>wpa_supplicant</code> (incase iwd is incompatible) for wireless connection support.<br>
+[systemd]: Include <code>dbus-broker</code>.<br>
+[OpenRC]: Include <code>syslog-ng</code>.<br>
+[Mergelist]: <code>graphical</code> is meant for desktop/laptop usage, <code>minimal</code> is for server use.<br>
+<code># emerge -avuDN @world $(cat /BIG/graphical-mergelist) example-package</code><br>
+Ask, Verbose, Changed Use, Deep, New USE; applies to both the world set, and manually specified packages (located in the 'merge-list' file).</p>
+</div>
+<div class="paragraph">
+<p>While waiting, better understand some of Gentoo&#8217;s innards; if you do not read these, you will have a very difficult time when encountering a problem.
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/make.conf" class="bare">https://wiki.gentoo.org/wiki//etc/portage/make.conf</a>
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/package.use" class="bare">https://wiki.gentoo.org/wiki//etc/portage/package.use</a>
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/package.mask" class="bare">https://wiki.gentoo.org/wiki//etc/portage/package.mask</a>
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/package.accept_keywords" class="bare">https://wiki.gentoo.org/wiki//etc/portage/package.accept_keywords</a>
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/profile/package.provided" class="bare">https://wiki.gentoo.org/wiki//etc/portage/profile/package.provided</a>
+1. <a href="https://dev.gentoo.org/~zmedico/portage/doc/man/dispatch-conf.1.html" class="bare">https://dev.gentoo.org/~zmedico/portage/doc/man/dispatch-conf.1.html</a>
+1. <a href="https://wiki.gentoo.org/wiki/Eselect" class="bare">https://wiki.gentoo.org/wiki/Eselect</a>
+1. <a href="https://wiki.gentoo.org/wiki/Eix" class="bare">https://wiki.gentoo.org/wiki/Eix</a>
+1. <a href="https://dev.gentoo.org/~zmedico/portage/doc/man/emaint.1.html" class="bare">https://dev.gentoo.org/~zmedico/portage/doc/man/emaint.1.html</a>
+1. <a href="https://wiki.gentoo.org/wiki/Kernel" class="bare">https://wiki.gentoo.org/wiki/Kernel</a>
+1. <a href="https://wiki.gentoo.org/wiki//etc/portage/patches" class="bare">https://wiki.gentoo.org/wiki//etc/portage/patches</a>
+1. <a href="https://devmanual.gentoo.org/index.html" class="bare">https://devmanual.gentoo.org/index.html</a></p>
+</div>
+<div class="paragraph">
+<p><code># grpck</code><br>
+<code># grpconv</code><br>
+sys-apps/shadow requires these to utilize the bcrypt hashing algorithm (more secure password storage); read the manpage for grpck and grpconv for exact information.
+<code># emerge --config sys-procress/fcron</code></p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># sh /BIG/scripts/systemd.sh</code><br>
+[OpenRC]<br>
+<code># cp /BIG/conf.d/zram-init /etc/conf.d/</code><br>
+<code>$# free -m | rg -o '<a id=":digit:"></a>+' | sed 1q</code><br>
+Show the total amount of available DRAM, divide this value in other ways than half if desired (default used for swap is half).<br>
+<code># nvim /etc/conf.d/zram-init</code><br>
+<code># sh /BIG/scripts/openrc.sh</code><br>
+Enable the services listed in the script.<br>
+<code># nvim /etc/rc.conf</code><br>
+Enable OpenRC&#8217;s logging, and startup OpenRC services in parallel (nowadays this is very reliable).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">rc_parallel="YES"
+rc_logger="YES"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># eselect pinentry set pinentry-gtk-2</code><br>
+Set GPG&#8217;s password creation prompt to use GTK2 (graphical) instead of curses.
+<em>_</em>
+<code>$# ip a</code><br>
+Look for an interface with an MTU of &#8656;1500.</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;dhcpcd&lt;/summary&gt;</p>
+</div>
+<div class="paragraph">
+<p><code># emerge dhcpcd</code><br>
+<code># nvim /etc/dhcpcd.conf</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"># Disable ARP probing to significantly lower the time it takes for dhcpcd to lease IPs and DNS'; ARP probing verifies if an IP is already used.
+noarp</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>DHCP (default)<br>
+[systemd]<br>
+<code># systemctl enable dhcpcd</code><br>
+[OpenRC]<br>
+<code># rc-update add dhcpcd default</code></p>
+</div>
+<div class="paragraph">
+<p>Static<br>
+<code>$# ip a</code><br>
+Check what the default gateway range is, such as "brd 192.168.1.255" (192.168.1.1-192.168.1.255).<br>
+<code># nvim /etc/dhcpcd.conf</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">static ip_address=192.168.1.149/24
+static routers=192.168.1.1
+static domain_name_servers=192.168.1.1</code></pre>
+</div>
+</div>
+<hr>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;netifrc</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>OpenRC only, don&#8217;t use for wireless connections; if using QEMU, this is unsupported, use dhcpcd instead.</strong>
+&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code>$# cd /etc/init.d</code><br>
+<code># ln -s net.lo net.eth0</code><br>
+Replace eth0 with your interface if needed.</p>
+</div>
+<div class="paragraph">
+<p><strong>{Static} Wired network</strong><br>
+<code>$# ip a</code><br>
+Check what the default gateway range is, such as "brd 192.168.1.255" (192.168.1.1-192.168.1.255).<br>
+<code># nvim /etc/conf.d/net</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"># CIDR notation; /24 = 1 IPv4 address.
+config_eth0="192.168.1.101/24"
+routes_eth0="default via 192.168.1.1"
+# The DNS and its fallback DNS(es) should be handled by the router.
+# If your router doesn't use dnscrypt-proxy2, consider using it.
+dns_servers_eth0="192.168.1.1"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>{DHCP} Wired network</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">config_eth0="dhcp"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># rc-update add net.eth0 default</code><br>
+Start 'eth0' network at boot (but not in the boot runlevel).
+<em>_</em>
+&lt;/details&gt;</p>
+</div>
+<div class="exampleblock">
+<div class="title">Example 1. systemd-networkd</div>
+<div class="content">
+<div class="paragraph">
+<p>Pick either DHCP or Static, not both.</p>
+</div>
+<div class="paragraph">
+<div class="title">DHCP</div>
+<p><code># nvim /etc/systemd/network/20-dhcp.network</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[Match]
+Name=en*
+[Network]
+DHCP=yes</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<div class="title">Static</div>
+<p><code>$# ip a</code><br>
+Check what the default gateway range is, such as "brd 192.168.1.255" (from 192.168.1.1 to 192.168.1.255).<br>
+<code># nvim /etc/systemd/network/20-static.network</code><br>
+[?] If the 'Gateway' IP is changed, the 'Address' IP has to be changed. If using the router&#8217;s DNS setting, update 'DNS' as well.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Supported CIDR</div>
+<div class="ulist">
+<ul>
+<li>
+<p>192.168.0.0/16</p>
+</li>
+<li>
+<p>172.16.0.0/12</p>
+</li>
+<li>
+<p>10.0.0.0/8</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock caution">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-caution" title="Caution"></i>
+</td>
+<td class="content">
+DHCP has the potential to lease your static IP to another device if allowed; set the DHCP Server on your router to only allow from 192.168.1.100 to 192.168.1.254 (with static IPs assigned below 192.168.1.100).
+</td>
+</tr>
+</table>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[Match]
+Name=en*
+[Network]
+Address=192.168.1.99/24
+Address=fd00::/8
+Gateway=192.168.1.1
+Gateway=
+DNS=192.168.1.1
+DNS=</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run this regardless of using static or DHCP.<br>
+<code># systemctl enable systemd-networkd</code></p>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div class="sect2">
+<h3 id="_user_creation_and_groups_assignment"><a class="anchor" href="#_user_creation_and_groups_assignment"></a>User creation, and group(s) assignment</h3>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>[All user groups are listed here, under the 'baselayout' provider.](<a href="https://api.gentoo.org/uid-gid.txt" class="bare">https://api.gentoo.org/uid-gid.txt</a>)<br>
+<strong>The 'acct' provider usually is for software that use custom group(s) functionality, such is the case for libvirt.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Group | Affected | Description
+--- | --- | ---
+audio | /dev/audio[1-9], /dev/snd/*, /dev/rtc0 | Direct access to sound hardware, required to make ALSA and OSS work in remote sessions. [The security implications of using this group.](<a href="https://wiki.ubuntu.com/Audio/TheAudioGroup" class="bare">https://wiki.ubuntu.com/Audio/TheAudioGroup</a>)
+disk | /dev/sd[a-z][1-9] | Direct access to storage disks, such as HDDs and SSDs.
+floppy | /dev/fd[0-9] | Direct access to floppy disks.
+kvm | /dev/kvm | Access to the KVM hypervisor.
+users | N/A | Standard users group.
+video | /dev/fb0 (or /dev/fb/0), /dev/misc/agpgart | Access to the framebuffer, 2D/3D hardware acceleration, and video capture devices.
+wheel | N/A | Can be used to grant users elevation to superuser (pseudo root) permission, and will be used for such.
+plugdev | N/A | Allows non-superuser mounting of cameras, along with the PTP and MTP protocols, which are useful for Android phones.
+realtime | N/A | Allows soft realtime scheduling, which is used for audio exclusively in this guide.
+usb | N/A | Allows non-superuser mounting of removable disks? (Not sure)</p>
+</div>
+<div class="paragraph">
+<p><code># groupadd -g 272 plugdev</code><br>
+If using the plugdev group, it needs to be created.
+&gt; <code>acct-group/plugdev</code> <strong>may be pulled in by packages that utilize the plugdev group; since the 'plugdev' group with the correct GID is already created,</strong> <code>acct-group/plugdev</code> <strong>does nothing in practice.</strong></p>
+</div>
+<div class="paragraph">
+<p><code># useradd -m -G disk,users,kvm,video,wheel,plugdev -s /bin/bash admin</code><br>
+Create a user, keep it short, such as 'admin'.</p>
+</div>
+<div class="paragraph">
+<p><code># passwd admin</code><br>
+Assign a password to the new user account.</p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/doas.conf</code><br>
+The most secure and simple privilege escalator tool.
+&gt; <code>$ man doas.conf</code> <strong>for information on these options.</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">permit persist keepenv :wheel</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># passwd -l root</code><br>
+Lock the 'root' account, it&#8217;s not required when using doas.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_installing_the_linux_kernel_and_grub2_bootloader"><a class="anchor" href="#_installing_the_linux_kernel_and_grub2_bootloader"></a>Installing the Linux Kernel and GRUB2 Bootloader</h3>
+<div class="paragraph">
+<p><code>$# df -ha</code><br>
+If you forgot if UEFI is supported, check again.</p>
+</div>
+<div class="paragraph">
+<p><code>$# eix gentoo-sources</code><br>
+The version highlighted is the one used.<br>
+<code># emerge gentoo-sources</code><br>
+Install the Linux kernel with some patches.</p>
+</div>
+<div class="paragraph">
+<p>Check which kernel is selected for the /usr/src/linux symbolic link.<br>
+<code>$# eselect kernel list</code><br>
+<code>$# cd /usr/src/linux</code></p>
+</div>
+<div class="paragraph">
+<p><code># kergen -dg</code><br>
+Plug in every hardware device you&#8217;ll be using now, and leave them plugged until after Kergen is done.
+&gt; <strong>If a device has no wire, such as Wiimotes, you need to look up the device(s) on the Gentoo wiki to enable their compatibility. For software compatibility, kergen will change nothing, so getting OpenVPN working requires the same process as Wiimotes would.</strong></p>
+</div>
+<div class="paragraph">
+<p><code># cat /BIG/.config1 &gt;&gt; .config</code><br>
+Append contents of the '.config1' file to the bottom of the '/usr/src/linux/.config' file.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong><code>[!]</code> Change these settings that Kergen turned on, to =m (module) or =n (disable); an example would be to disable DRM_NOUVEAU if using a nVidia GPU for only VFIO pass-through:<br>
+DRM_RADEON, DRM_AMDGPU, DRM_NOUVEAU, DRM_I195, DRM_VMWGFX, DRM_VBOXVIDEO, FB_RADEON, FB_NVIDIA.<br>
+Jump to the bottom of the <code>.config</code> file, using the 'gg' key sequence.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># nvim .config</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"># Change the contents inserted from Kergen and '.config1' as needed.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Required everytime after directly modifying a kernel config file; not doing so forces <code>make oldconfig</code> on a <code>make</code> for the config file to be parsable, which is very tedious.<br>
+<code># make nconfig</code>
+&gt; <strong>Press the 'h' key to show the description of the currently selected kernel option.</strong></p>
+</div>
+<div class="paragraph">
+<p>Disable unused devices in:<br>
+&#8594; Device Drivers &#8594; HID support &#8594; Special HID drivers<br>
+&#8594; Device Drivers &#8594; X86 Platform Specific Device Drivers<br>
+&#8594; Device Drivers &#8594; Network device support &#8594; Wireless LAN</p>
+</div>
+<div class="paragraph">
+<p>Change -j8 to <code>nproc&#8217;s output.<br>
+`# make -j8 &amp;&amp; make install modules_install</code></p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>If DEPMOD wasn&#8217;t outputted, the command has been entered in wrong, or the makejob failed.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Generate static filesystem information, which is required for correctly utilizing  the filesystem(s) on disk(s).<br>
+<code># cp /BIG/scripts/genfstab.sh /usr/local/bin/genfstab</code><br>
+<code># chmod +x /usr/local/bin/genfstab</code><br>
+<code># genfstab -U / &gt;&gt; /etc/fstab</code></p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/fstab</code><br>
+Edit the File System TABles; remove the 'discard' flag(s) if present.</p>
+</div>
+<div class="paragraph">
+<p><code># cp /BIG/udev-rules/60-iosched.rules /etc/udev/rules.d/60-iosched.rules</code><br>
+Use the best I/O scheduler based on disk type.</p>
+</div>
+<div class="paragraph">
+<p><code># emerge -av grub</code><br>
+The GRUB2 bootloader, since Gentoo automatically detects the required GRUB_PLATFORMS, further action for other distros aren&#8217;t required for Gentoo.</p>
+</div>
+<div class="paragraph">
+<p>&gt;*While in Neovim (nvim):<br>
+:read !blkid|rg root<br>
+:read !blkid|rg LUKS*</p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/default/grub</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">GRUB_DISABLE_OS_PROBER=true
+# Don't detect other operating systems, which is the intended setup.
+GRUB_ENABLE_CRYPTODISK=y
+# Required to decrypt the LUKS1 (encrypted) volume.
+
+#&gt; Example: rd.luks.uuid=luks-9dc64c25-6ab6-48a7-88b8-91d59af43f76
+
+GRUB_CMDLINE_LINUX="init=/sbin/openrc-init quiet usbcore.autosuspend=-1 apparmor=1 security=apparmor root=UUID=[RG-ROOT-RESULT] rd.luks.uuid=luks-[RG-LUKS-RESULT] rd.luks.allow-discards"
+
+# [systemd]: Remove 'init=/sbin/openrc-init'.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[UEFI]<br>
+<code># grub-install --efi-directory=/efi --recheck --removable</code><br>
+[MBR]<br>
+<code># grub-install /dev/EXAMPLE --recheck</code></p>
+</div>
+<div class="paragraph">
+<p>The LUKS (slot 1) key is used to automatically unlock on initramfs initialization, which is safe since GRUB2 demands a slot 0 password before decrypting to access the boot entries (along with initramfs).<br>
+<code># mkdir /root/.keyfiles</code><br>
+<code># touch /root/.keyfiles/boot</code><br>
+<code># chmod 600 /root/.keyfiles/boot</code><br>
+<code># dd if=/dev/urandom of=/root/.keyfiles/boot bs=1024 count=1</code><br>
+<code># cryptsetup -v luksAddKey /dev/EXAMPLE2 /root/.keyfiles/boot</code></p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># nvim /etc/crypttab</code>
+&gt; <code>:read !blkid|rg LUKS*</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">cr_example2 UUID=[RG-LUKS-RESULT] /root/.keyfiles/boot</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[OpenRC]<br>
+<code># nvim /etc/conf.d/dmcrypt</code>
+&gt; <code>:read !blkid|rg LUKS*</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">target='data'
+source=UUID='[RG-LUKS-RESULT]'
+key='/root/.keyfiles/boot'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># chmod -R g-rwx,o-rwx /boot</code><br>
+Prevent non-SU users reading the initrd and extracting the key file.<br>
+<code># cp /BIG/dracut.conf /etc/dracut.conf.d/custom.conf</code><br>
+<code># dracut --kver 5.6.12-gentoo</code><br>
+DEPMOD shows the Linux kernel name; alternatively, list them with <code>$# exa /lib/modules</code>.</p>
+</div>
+<div class="paragraph">
+<p><code># grub-mkconfig -o /boot/grub/grub.cfg</code><br>
+Generate the bootloader entries.</p>
+</div>
+<div class="paragraph">
+<p><code># rm /stage3*</code><br>
+Dispose of the bootstrap archive, there&#8217;s no practical use for it now.</p>
+</div>
+<div class="paragraph">
+<p><code># mv /BIG /home/admin/BIG &amp;&amp; chown -R admin. /home/admin/BIG</code><br>
+Move 'BIG' directory to home directory owned by the new user created, and assign RW (read &amp; write) permissions to that user; change 'admin' if that is not the username.</p>
+</div>
+<div class="paragraph">
+<p><code># eselect repository enable torbrowser</code><br>
+<code># emerge --sync torbrowser</code><br>
+<code># eix-update</code><br>
+<code># cp BIG/sets/torbrowser /etc/portage/sets</code><br>
+<code># emerge -av @torbrowser</code><br>
+The Tor Browser is the best browser for anonymity on the clearnet, and its in binary (compiling ourselves is a unique fingerprint), so it will install extremely quick. This will be used to access these wiki pages after the reboot.</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;nVidia&#8217;s proprietary driver</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Doesn&#8217;t cover installation of Vulkan beta versions.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>The <code>uvm</code> USE flag allows NVENC and CUDA to function correctly.<br>
+<code># emerge -av nvidia-drivers</code><br>
+<code># cp ~/BIG/nvidia.conf /etc/modprobe.d/</code><br>
+Copying over and utilizing the custom nVidia kernel module settings.</p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/modprobe.d/nvidia.conf</code>
+&gt; <code># cat /proc/mtrr</code><br>
+<strong>If all regs are 'uncachable', then NVreg_UsePageAttributeTable=1 is required!</strong></p>
+</div>
+<div class="paragraph">
+<p><code># eselect opengl set nvidia</code><br>
+<code># eselect opencl set nvidia</code><br>
+Extra info here: <a href="https://wiki.gentoo.org/wiki/NVIDIA/nvidia-drivers" class="bare">https://wiki.gentoo.org/wiki/NVIDIA/nvidia-drivers</a></p>
+</div>
+<hr>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;VirtualBox Guest Additions</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Provides Shared Folders, Shared Clipboard, Drag and Drop, and 3D video acceleration.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># emerge virtualbox-guest-additions xf86-video-vmware</code></p>
+</div>
+<div class="paragraph">
+<p>If using Shared Folders is desired.<br>
+<code># gpasswd -a $USER vboxsf</code></p>
+</div>
+<div class="paragraph">
+<p><strong>[!]</strong> If visual artifacts are present, use the VBoxSVGA graphics controller.</p>
+</div>
+<hr>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;VMWare Guest Additions</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Provides the same functionality as VirtualBox Guest Additions.</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># emerge open-vm-tools gtkmm xf86-input-vmmouse xf86-video-vmware</code></p>
+</div>
+<hr>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p><code>reboot</code><br>
+The reboot.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_desktop_setup"><a class="anchor" href="#_desktop_setup"></a>Desktop Setup</h3>
+<div class="paragraph">
+<p><code>$# tzselect</code><br>
+Listing timezones.</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Avoid /usr/share/zoneinfo/Etc/GMT timezones!<br>
+For instance, GMT-5 (EST) is actually GMT+5 (PKT), and DST is ignored.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Setting a timezone.<br>
+[systemd]<br>
+<code># timedatectl set-timezone America/New_York</code><br>
+[OpenRC]<br>
+<code># ln -sf /usr/share/zoneinfo/America/New_York /etc/localtime</code></p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code>$# localectl list-keymaps</code><br>
+List all available keyboard layouts.<br>
+<code># localectl set-keymap us</code><br>
+Set the default TTY keymap, leave as is for the default 'us' QWERTY.<br>
+<code># localectl set-x11-keymap us</code><br>
+Set the default Xorg (for graphical environments; applies to Wayland too) keymap.<br>
+[OpenRC]<br>
+<code>$# exa -l /usr/share/keymaps/i386</code><br>
+The keymaps are grouped by layout; <code>exa -l /usr/share/keymaps/i386/qwerty</code> would show all QWERTY keyboard layouts.</p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/conf.d/keymaps</code><br>
+Set the keyboard layout, leave as is for the default 'us' QWERTY.</p>
+</div>
+<div class="paragraph">
+<p><code># fcrontab -e</code><br>
+Enabling TRIM for all (-a) supported disks, maintaining the speed of them; runs once per week unless otherwise specified, such as '@ 1d' or '@daily'.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">@ 1w /sbin/fstrim -a</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># rm /etc/sysctl.d/99-sysctl.conf</code><br>
+Remove systemd&#8217;s example sysctl config.</p>
+</div>
+<div class="paragraph">
+<p><code>$# cd /home/admin</code><br>
+Change 'admin' if that is not the username.<br>
+<code># cp BIG/99-custom.conf /etc/sysctl.d</code><br>
+Use the custom sysctl config instead.<br>
+<code># nvim /etc/sysctl.d/99-custom.conf</code></p>
+</div>
+<div class="paragraph">
+<p>Fonts cannot be skipped if using a graphical environment, which this guide considers the case from the start.<br>
+<code># mkdir /etc/portage/sets</code><br>
+<code># cp BIG/sets/fonts /etc/portage/sets</code><br>
+<code># emerge -av @fonts</code></p>
+</div>
+<div class="paragraph">
+<p><code># eselect infinality set ultimate-ms</code><br>
+<code># eselect lcdfilter set ultimate</code><br>
+<code># sh BIG/scripts/fontconfig-disable-all.sh</code><br>
+<code>$# eselect fontconfig list</code><br>
+"[26]  52-infinality.conf".<br>
+<code># eselect fontconfig enable 26</code></p>
+</div>
+<div class="paragraph">
+<p>[OpenRC]<br>
+<code># cd /etc/init.d</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"># for n in `seq 1 6`; do ln -s agetty agetty.tty{1..6}; rc-config add agetty.tty{1..6} default; done`
+#? The formatting of this command breaks the wiki; command has to be ran with superuser (#).</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The TTY will not work without these services for OpenRC&#8217;s init functionality (replaces sysvinit).</p>
+</div>
+<div class="paragraph">
+<p>Automatic Linux logins for TTY1; no tangible security risks with disk encryption for single user systems.<br>
+[systemd]<br>
+<code># systemctl edit getty@.service</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">[Service]
+ExecStart=
+# If 'admin' is not the correct username, change it.
+ExecStart=-/sbin/agetty -J -a admin %I $TERM</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>[OpenRC]<br>
+<code># nvim /BIG/conf.d/tty</code><br>
+If 'admin' is not your username, change it.<br>
+<code># tee /etc/conf.d/agetty.tty{1..6} &lt; /BIG/conf.d/tty &gt;/dev/null</code><br>
+Piping to /dev/null at the end silences the stdout of tee, so tee doesn&#8217;t display the same contents 6 times in the current terminal.</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;AMD open-source driver</p>
+</div>
+<div class="paragraph">
+<p>&gt;*Already integrated into the Linux kernel, but requires an additional package for 2D display server (Xorg &amp; Wayland) acceleration.*&lt;/summary&gt;</p>
+</div>
+<div class="paragraph">
+<p>Default for GCN2 and older.<br>
+<code># emerge xf86-video-ati</code></p>
+</div>
+<div class="paragraph">
+<p>Can be forced for use on GCN1 &amp; GCN2.<br>
+<code># emerge xf86-video-amdgpu</code></p>
+</div>
+<div class="paragraph">
+<p><code>#EDIT /etc/default/grub</code><br>
+For the <code>amdgpu</code> driver only.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc"># Add to 'GRUB_CMDLINE_LINUX_DEFAULT'
+amdgpu.exp_hw_support=1 amdgpu.audio=0 amdgpu.disp_priority=2 amdgpu.msi=1
+# Remove amdgpu.exp_hw_support if using GCN3 or newer.
+# amdgpu.audio=1 if using the GPU's onboard Intel HD audio.
+# Remove amdgpu.disp_priority if displaying monitor input on a nVidia or Intel iGPU first is desired.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># grub-mkconfig -o /boot/grub/grub.cfg</code></p>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;Intel open-source driver</p>
+</div>
+<div class="paragraph">
+<p>&gt;*Same situation as AMD&#8217;s driver.*&lt;/summary&gt;</p>
+</div>
+<div class="paragraph">
+<p><code># emerge xf86-video-intel</code></p>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;details&gt;&lt;summary&gt;Spice VDAgent</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>The Guest Additions for the SPICE server, meant for use with QEMU; provides dynamic resolution (based on window size), shared clipboard, and shared folders (this doesn&#8217;t get used).</strong>&lt;/summary&gt;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p><code># emerge spice-vdagent</code><br>
+Use Spice VDAgent immediately; it may be ran on boot automatically? (Check for OpenRC).<br>
+<code># spice-vdagentd</code></p>
+</div>
+<div class="paragraph">
+<p>&lt;/details&gt;</p>
+</div>
+<div class="paragraph">
+<p><code># gpasswd -a admin realtime</code><br>
+Allowing PulseAudio and JACK2 to use soft realtime priority.<br>
+<code># mkdir /etc/pulse/daemon.conf.d</code><br>
+Lowering PulseAudio&#8217;s sound delay as low as it can go.<br>
+<code># cp BIG/99-lowlatency.conf /etc/pulse/daemon.conf.d</code><br>
+<code># nvim /etc/pulse/daemon.conf.d/99-lowlatency.conf</code></p>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/pulse/default.pa</code><br>
+<code>tsched=1</code> guarantees audio playback consistency on any supported configuration, but makes latency reduction impossible.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">load-module module-udev-detect tsched=0</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Run <code>nproc</code> to see the total CPU logical core, the example considers the max as '8' (common for Intel CPUs); this specifies the MAKEFLAGS outside of Portage (and software that read Portage&#8217;s MAKEOPTS values) for privileged users. Also allow the usage of a custom QT5 theming engine (Kvantum), and the QT5 configuration tool.
+&gt; <strong>GNUMAKEFLAGS is used instead of MAKEFLAGS since that&#8217;s what was outputted from:</strong><br>
+<code>$# strings /usr/bin/make | rg MAKEFLAGS</code></p>
+</div>
+<div class="paragraph">
+<p>[systemd]<br>
+<code># nvim /etc/systemd/system.conf</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">DefaultEnvironment="GNUMAKEFLAGS=-j8 -l8" "MAKEFLAGS=-j8 -l8" QT_QPA_PLATFORMTHEME=qt5ct</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code># nvim /etc/systemd/user.conf</code><br>
+Apply the same change for unprivileged users as well.<br>
+[OpenRC]<br>
+<code>#EDIT /etc/env.d/99local</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">GNUMAKEFLAGS="-j8 -l8"
+MAKEFLAGS="-j8 -l8"
+QT_QPA_PLATFORMTHEME="qt5ct"</code></pre>
+</div>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p><strong>Compositors (such as wlroots for Sway and Wayfire) interfacing the Wayland protocol are more secure than all Xorg WMs, and have the best tear-free rendering implementation.</strong></p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>Pick a graphical environment; Wayland cannot be used on nVidia GPUs.<br>
+<strong>Wayland WM: [Sway](WM/Sway)</strong><br>
+<strong>Xorg WM: [Window Maker](WM/Window-Maker)</strong></p>
+</div>
+<div class="paragraph">
+<p>Exit superuser shell: <strong><code>exit</code></strong></p>
+</div>
+<div class="paragraph">
+<p><code>$ cp ~/BIG/.bashrc ~</code><br>
+Execute shell scripts from /etc/profile.d for custom aliases to work.</p>
+</div>
+<div class="paragraph">
+<p><code>$ echo needs_root_rights = no | doas tee /etc/X11/Xwrapper.config</code><br>
+Root-less Xorg (graphical host), increases security and lowers memory usage; this only works since <code>logind</code> is used (<code>elogind</code> for inits that aren&#8217;t systemd).
+&gt; <strong>'tee' has to be used since this is a non-superuser shell, with '|' being the pipe that 'tee' reads from.</strong></p>
+</div>
+<div class="paragraph">
+<p><code># emerge -av jack2 qjackctl</code><br>
+<code>$ cp ~/BIG/scripts/start-jackdbus.sh ~</code><br>
+<code>$ cat /proc/asound/cards</code><br>
+Print out ALSA device names.<br>
+<code>$ nvim ~/start-jackdbus.sh</code><br>
+If the ALSA device name is not '0', change 'hw:0' to the actual name.</p>
+</div>
+<div class="paragraph">
+<p><code>#EDIT /etc/pulse/default.pa</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-asciidoc hljs" data-lang="asciidoc">set-default-sink jack_out
+set-default-source jack_in</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>QjackCtl will only work while using a graphical environment (Window Manager).
+* <code>$ qjackctl</code>
+* Setup &#8594; Change the interface to the device you use, as JACK2 will fail to start without an interface selected
+* Frames/Period: 64, Periods/Buffer: 4
+* Misc &#8594; <br>
+Enable D-Bus interface <br>
+Enable JACK D-Bus interface
+* Exit QjackCtl then run it again.
+* Press the Start button, and do an audio test; Audacious has switchable support between PulseAudio, and pure JACK2 audio outputs, see its installation instructions in [2.0 Recommendations](2.0-Recommendations).
+* If the audio is fucked, raise the Periods/Buffer by intervals of 1; try keeping Periods/Buffer and Frames/Period in such a way that minimizes audio delay.</p>
+</div>
+<div class="paragraph">
+<p>Now, wire the inputs (source) and outputs (sink) correctly.<br>
+Use Ctrl + Mouse1 to move the view, Ctrl + Mouse2 (mouse wheel) to zoom in/out.<br>
+{TODO: PUT SCREENSHOT HERE}</p>
+</div>
+<hr>
+</div>
+</article>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../_/js/site.js"></script>
+<script async src="../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
